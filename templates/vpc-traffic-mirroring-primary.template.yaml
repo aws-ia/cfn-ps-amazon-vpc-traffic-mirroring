@@ -121,7 +121,7 @@ Metadata:
       RemoteAccessCIDR:
         default: Allowed bastion external access CIDR
       VPCCIDR:
-        default: VPC CIDR     
+        default: VPC CIDR
   cfn-lint: { config: { ignore_checks: [W9901] } }
 
 Parameters:
@@ -247,7 +247,7 @@ Parameters:
       - '4'
     Default: '2'
     Description: The number of targets to create. The maximum number is four.
-    Type: String                
+    Type: String
   TargetEC2InstanceType:
     Description: Amazon EC2 instance type for the target instances associated with NLB.
     Type: String
@@ -279,7 +279,7 @@ Parameters:
     Description: Target instance disk size in GB. Default is set to 8 GB.
     Default: 8
     Type: Number
-    ConstraintDescription: Must be a valid instance size in GB. 
+    ConstraintDescription: Must be a valid instance size in GB.
   VPCTenancy:
     AllowedValues: ['default', 'dedicated']
     Default: default
@@ -360,7 +360,7 @@ Resources:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: !Sub
-        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/cfn-ps-linux-bastion/templates/linux-bastion.template
+        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/cfn-ps-linux-bastion/templates/linux-bastion-entrypoint-existing-vpc.template.yaml
         - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
           S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
       Parameters:
@@ -391,7 +391,7 @@ Resources:
           S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
       Parameters:
         VPCID: !GetAtt [VPCStack, Outputs.VPCID]
-        VPCCIDR: !GetAtt [VPCStack, Outputs.VPCCIDR]       
+        VPCCIDR: !GetAtt [VPCStack, Outputs.VPCCIDR]
         Subnet1ID: !GetAtt [VPCStack, Outputs.PrivateSubnet1AID]
         Subnet2ID: !GetAtt [VPCStack, Outputs.PrivateSubnet2AID]
         NumTargetEC2Instances: !Ref NumTargetEC2Instances
