@@ -1,5 +1,5 @@
 project:
-  name: quickstart-amazon-vpc-traffic-mirroring
+  name: cfn-ps-amazon-vpc-traffic-mirroring
   owner: pmankad@amazon.com
   package_lambda: false
   s3_regional_buckets: true
@@ -32,7 +32,7 @@ project:
     PublicSubnet2CIDR: 10.0.144.0/20
     RemoteAccessCIDR: 10.0.0.0/16
     VPCCIDR: 10.0.0.0/16
-    QSS3KeyPrefix: quickstart-amazon-vpc-traffic-mirroring/
+    QSS3KeyPrefix: cfn-ps-amazon-vpc-traffic-mirroring/
     QSS3BucketRegion: $[taskcat_current_region]
     QSS3BucketName: $[taskcat_autobucket]
 tests:
