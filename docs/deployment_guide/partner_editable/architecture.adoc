@@ -7,7 +7,7 @@ AWS Cloud.
 
 [#architecture1]
 .Partner Solution architecture for {partner-product-short-name} on AWS
-image::../docs/deployment_guide/images/architecture_diagram.png[Architecture]
+image::../docs/deployment_guide/images/vpc-traffic-mirroring-architecture-diagram.png[Architecture]
 
 As shown in <<architecture1>>, this Partner Solution sets up the following:
 
@@ -20,9 +20,12 @@ internet access for resources in the private subnets.*
 ** A Linux bastion host in an Auto Scaling group to allow inbound Secure
 Shell (SSH) access to Amazon Elastic Compute Cloud (Amazon EC2) instances in public and private subnets.*
 * In the private subnets:
-** <item>.
-** <item>.
+ ** EC2 instances in an Auto Scaling group used for deploying across two Availability Zones, offering high availability.
+ ** A Network Load Balancer to balance traffic between the EC2 instances. For limited scale deployments, you can skip the Network Load Balancer setup and work directly with Suricata deployed on a single Amazon Linux 2 instance by choosing `TrafficMirrorTargetType` as `ENI` and `NumTargetEC2Instances` as `1`.
+
 // Add bullet points for any additional components that are included in the deployment. Ensure that the additional components are shown in the architecture diagram. End each bullet with a period.
-* <describe any additional components>.
 
 [.small]#* The template that deploys this Partner Solution into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.#
+
+NOTE: This Partner Solution does not configure VPC Traffic Mirroring. For information about configuring Traffic Mirroring to monitor your network traffic, see the
+https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-getting-started.html[Traffic Mirroring getting start guide^].

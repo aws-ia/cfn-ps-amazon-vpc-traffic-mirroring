@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<meta name="description" content="Full Product Name Deployment Guide on AWS">
-<meta name="keywords" content="Partner Solution, AWS, Full Product Name">
-<title>Full Product Name on AWS</title>
+<meta name="description" content="Amazon EC2 with Suricata Deployment Guide on AWS">
+<meta name="keywords" content="Partner Solution, AWS, Amazon EC2 with Suricata">
+<title>Amazon EC2 with Suricata on AWS</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
 /* Uncomment @import statement to use as custom stylesheet */
@@ -858,9 +858,12 @@ p.footer-text a{color:#d7d8d8}
 <li><a href="#_costs_and_licenses">Costs and licenses</a></li>
 <li><a href="#_architecture">Architecture</a></li>
 <li><a href="#_deployment_options">Deployment options</a></li>
-<li><a href="#_predeployment_steps">Predeployment steps</a></li>
 <li><a href="#_deployment_steps">Deployment steps</a></li>
-<li><a href="#_postdeployment_steps">Postdeployment steps</a></li>
+<li><a href="#_postdeployment_steps">Postdeployment steps</a>
+<ul class="sectlevel2">
+<li><a href="#_test_the_deployment">Test the deployment</a></li>
+</ul>
+</li>
 <li><a href="#_troubleshooting">Troubleshooting</a></li>
 <li><a href="#_customer_responsibility">Customer responsibility</a></li>
 <li><a href="#_feedback">Feedback</a></li>
@@ -871,7 +874,7 @@ p.footer-text a{color:#d7d8d8}
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
-<h2 id="_full_product_name_on_aws" class="discrete text-center">Full Product Name on AWS</h2>
+<h2 id="_amazon_ec2_with_suricata_on_aws" class="discrete text-center">Amazon EC2 with Suricata on AWS</h2>
 <h2 id="_partner_solution_deployment_guide" class="discrete text-left text-center">Partner Solution Deployment Guide</h2>
 <div class="imageblock text-center">
 <div class="content">
@@ -879,14 +882,13 @@ p.footer-text a{color:#d7d8d8}
 </div>
 </div>
 <div class="paragraph text-center">
-<p><strong>January 2023</strong><br>
-<em>John Smith, Example Company Name, Ltd.</em><br>
-<em>Janine Singh, AWS IoT Partner team</em><br>
-<em>Toni Jones, AWS Integration &amp; Automation team</em><br></p>
+<p><strong>September 2021</strong><br>
+<em>Pratik R. Mankad, AWS Strategic Accounts; Vaibhav Katkade, Amazon EC2 Product Management</em><br>
+<em>Vinod Shukla, AWS Integration &amp; Automation Team</em><br></p>
 </div>
 <div class="imageblock text-left image-container">
 <div class="content">
-<img src="https://aws-quickstart.s3.amazonaws.com/partner-solution-repo-name/docs/boilerplate/.images/aws-quickstart-graphic.png" alt="">
+<img src="https://aws-quickstart.s3.amazonaws.com/cfn-ps-amazon-vpc-traffic-mirroring/docs/boilerplate/.images/aws-quickstart-graphic.png" alt="">
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -896,13 +898,13 @@ p.footer-text a{color:#d7d8d8}
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Refer to the <a href="https://github.com/aws-quickstart/partner-solution-repo-name" target="_blank" rel="noopener">GitHub repository</a> to view source files, report bugs, submit feature ideas, and post feedback about this Partner Solution. To comment on the documentation, refer to <a href="#_feedback">Feedback</a>.
+Refer to the <a href="https://github.com/aws-ia/cfn-ps-amazon-vpc-traffic-mirroring" target="_blank" rel="noopener">GitHub repository</a> to view source files, report bugs, submit feature ideas, and post feedback about this Partner Solution. To comment on the documentation, refer to <a href="#_feedback">Feedback</a>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph text-left">
-<p>This Partner Solution was created by Example Company Name, Ltd. in collaboration with Amazon Web Services (AWS). <a href="https://aws.amazon.com/solutions/partners/" target="_blank" rel="noopener">Partner Solutions</a> are automated reference deployments that help people deploy popular technologies on AWS according to AWS best practices. If you&#8217;re unfamiliar with AWS Partner Solutions, refer to the <a href="https://fwd.aws/rA69w?" target="_blank" rel="noopener">AWS Partner Solution General Information Guide</a>.</p>
+<p>This Partner Solution was created by Amazon Web Services (AWS). <a href="https://aws.amazon.com/solutions/partners/" target="_blank" rel="noopener">Partner Solutions</a> are automated reference deployments that help people deploy popular technologies on AWS according to AWS best practices. If you&#8217;re unfamiliar with AWS Partner Solutions, refer to the <a href="https://fwd.aws/rA69w?" target="_blank" rel="noopener">AWS Partner Solution General Information Guide</a>.</p>
 </div>
 </div>
 </div>
@@ -910,16 +912,37 @@ Refer to the <a href="https://github.com/aws-quickstart/partner-solution-repo-na
 <h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This guide covers the information you need to deploy the Full Product Name Partner Solution in the AWS Cloud.</p>
+<p>This guide covers the information you need to deploy the Amazon EC2 with Suricata Partner Solution in the AWS Cloud.</p>
 </div>
 <div class="paragraph">
-<p>This Amazon Web Services (AWS) Partner Solution deploys [&lt;product name&gt;](&lt;partner&#8217;s marketing product page&gt;) in the AWS Cloud so that &lt;purpose&gt;. This solution is for &lt;target users&gt; who want to &lt;do what&gt; so that &lt;why&gt;. For more information, refer to the [&lt;product name&gt; documentation](&lt;URL&gt;).</p>
+<p>This Amazon Web Services (AWS) Partner Solution provides instructions for deploying an Amazon Elastic Compute Cloud (Amazon EC2) instance with <a href="https://suricata.io/" target="_blank" rel="noopener">Suricata</a>, an open-source tool for monitoring network traffic with <a href="https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html" target="_blank" rel="noopener">Amazon VPC Traffic Mirroring</a>.</p>
+</div>
+<div class="paragraph">
+<p>The Partner Solution provides AWS CloudFormation templates for deploying Suricata on a single Amazon Linux 2 EC2 instance for limited scale deployments or behind a Network Load Balancer in an Auto Scaling group for highly available larger deployments.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This Partner Solution does not configure VPC Traffic Mirroring. For information about configuring Traffic Mirroring to monitor your network traffic, see the
+<a href="https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-getting-started.html" target="_blank" rel="noopener">Traffic Mirroring getting start guide</a>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_costs_and_licenses">Costs and licenses</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>This Partner Solution installs <a href="https://suricata.io/" target="_blank" rel="noopener">Suricata</a> on an Amazon Linux 2 EC2 instance.
+The <a href="https://suricata.io/features/open-source/" target="_blank" rel="noopener">Suricata source code</a> is licensed under
+<a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" rel="noopener">version 2 of the GNU General Public License</a>.</p>
+</div>
 <div class="paragraph">
 <p>There is no cost to use this Partner Solution, but you will be billed for any AWS services or resources that this Partner Solution deploys. For more information, refer to the <a href="https://fwd.aws/rA69w?" target="_blank" rel="noopener">AWS Partner Solution General Information Guide</a>.</p>
 </div>
@@ -929,14 +952,14 @@ Refer to the <a href="https://github.com/aws-quickstart/partner-solution-repo-na
 <h2 id="_architecture">Architecture</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Deploying this Partner Solution with default parameters builds the following Product Name environment in the
+<p>Deploying this Partner Solution with default parameters builds the following Suricata on Amazon Linux 2 environment in the
 AWS Cloud.</p>
 </div>
 <div id="architecture1" class="imageblock">
 <div class="content">
-<img src="docs/deployment_guide/images/architecture_diagram.png" alt="Architecture">
+<img src="docs/deployment_guide/images/vpc-traffic-mirroring-architecture-diagram.png" alt="Architecture">
 </div>
-<div class="title">Figure 1. Partner Solution architecture for Product Name on AWS</div>
+<div class="title">Figure 1. Partner Solution architecture for Suricata on Amazon Linux 2 on AWS</div>
 </div>
 <div class="paragraph">
 <p>As shown in <a href="#architecture1">Figure 1</a>, this Partner Solution sets up the following:</p>
@@ -970,21 +993,31 @@ Shell (SSH) access to Amazon Elastic Compute Cloud (Amazon EC2) instances in pub
 <div class="ulist">
 <ul>
 <li>
-<p>&lt;item&gt;.</p>
+<p>EC2 instances in an Auto Scaling group used for deploying across two Availability Zones, offering high availability.</p>
 </li>
 <li>
-<p>&lt;item&gt;.</p>
+<p>A Network Load Balancer to balance traffic between the EC2 instances. For limited scale deployments, you can skip the Network Load Balancer setup and work directly with Suricata deployed on a single Amazon Linux 2 instance by choosing <code>TrafficMirrorTargetType</code> as <code>ENI</code> and <code>NumTargetEC2Instances</code> as <code>1</code>.</p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p>&lt;describe any additional components&gt;.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p><span class="small">* The template that deploys this Partner Solution into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.</span></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This Partner Solution does not configure VPC Traffic Mirroring. For information about configuring Traffic Mirroring to monitor your network traffic, see the
+<a href="https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-getting-started.html" target="_blank" rel="noopener">Traffic Mirroring getting start guide</a>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -997,22 +1030,16 @@ Shell (SSH) access to Amazon Elastic Compute Cloud (Amazon EC2) instances in pub
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://qs_launch_permalink" target="_blank" rel="noopener">Deploy Product Name into a new VPC</a>. This option builds a new AWS environment that consists of the VPC, subnets, NAT gateways, security groups, bastion hosts, and other infrastructure components. It then deploys Product Name into this new VPC.</p>
+<p><a href="https://fwd.aws/pnkPy?" target="_blank" rel="noopener">Deploy Suricata on Amazon Linux 2 into a new VPC</a>. This option builds a new AWS environment that consists of the VPC, subnets, NAT gateways, security groups, bastion hosts, and other infrastructure components. It then deploys Suricata on Amazon Linux 2 into this new VPC.</p>
 </li>
 <li>
-<p><a href="https://qs_launch_permalink" target="_blank" rel="noopener">Deploy Product Name into an existing VPC</a>. This option provisions Product Name in your existing AWS infrastructure.</p>
+<p><a href="https://fwd.aws/KkyGv?" target="_blank" rel="noopener">Deploy Suricata on Amazon Linux 2 into an existing VPC</a>. This option provisions Suricata on Amazon Linux 2 in your existing AWS infrastructure.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>This Partner Solution provides separate templates for these options. It also lets you configure Classless Inter-Domain Routing (CIDR) blocks, instance types, and Product Name settings.</p>
+<p>This Partner Solution provides separate templates for these options. It also lets you configure Classless Inter-Domain Routing (CIDR) blocks, instance types, and Suricata on Amazon Linux 2 settings.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_predeployment_steps">Predeployment steps</h2>
-<div class="sectionbody">
-
 </div>
 </div>
 <div class="sect1">
@@ -1051,10 +1078,10 @@ Unless you&#8217;re customizing the Partner Solution templates or are instructed
 <p>On the <strong>Review</strong> page, review and confirm the template settings. Under <strong>Capabilities</strong>, select all of the check boxes to acknowledge that the template creates AWS Identity and Access Management (IAM)  resources that might require the ability to automatically expand macros.</p>
 </li>
 <li>
-<p>Choose <strong>Create stack</strong>. The stack takes about 15 minutes to deploy.</p>
+<p>Choose <strong>Create stack</strong>. The stack takes about 10 minutes to deploy.</p>
 </li>
 <li>
-<p>Monitor the stack&#8217;s status, and when the status is <strong>CREATE_COMPLETE</strong>, the Full Product Name deployment is ready.</p>
+<p>Monitor the stack&#8217;s status, and when the status is <strong>CREATE_COMPLETE</strong>, the Amazon EC2 with Suricata deployment is ready.</p>
 </li>
 <li>
 <p>To view the created resources, choose the <strong>Outputs</strong> tab.</p>
@@ -1066,7 +1093,74 @@ Unless you&#8217;re customizing the Partner Solution templates or are instructed
 <div class="sect1">
 <h2 id="_postdeployment_steps">Postdeployment steps</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_test_the_deployment">Test the deployment</h3>
+<div class="paragraph">
+<p>Perform the following steps to verify that Suricata is installed and running on the target instances.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Make a note of the <strong>TargetInstanceASG</strong> value shown in the <strong>Outputs</strong> tab.</p>
+</li>
+<li>
+<p>Using either AWS CLI or the AWS Management Console, identify the IDs of the instances in the Auto Scaling group. For example, you can use the following CLI command to fetch the instance IDs.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name ${YOUR_ASG_NAME} --region ${DEPLOY_REGION} | grep -i instanceid | awk '{print $2}'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Sample output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>"i-0c28001ae82907b0a",
+"i-0c425ea76fe462214",</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Using either AWS CLI or the AWS Management Console, connect to any of the instances in the output of the previous command and verify that Suricata is installed.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>aws ssm start-session --target ${INSTANCE_ID} --region ${DEPLOY_REGION}
+# In the started session
+sudo su ec2-user
+# Verify Suricata version
+suricata build-info | head -1
+# Verify Suricata service status
+systemctl status suricata</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Sample output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>% aws ssm start-session --target ${INSTANCE_ID} --region ${DEPLOY_REGION}
+Starting session with SessionId: xxxx-yyyy-12345678abcd8888a
+sh-4.2$ sudo su ec2-user
+[ec2-user@ip-10-0-17-42 bin]$ suricata build-info | head -1
+Suricata 6.0.3
+[ec2-user@ip-10-0-17-42 bin]$ systemctl status suricata
+● suricata.service - Suricata Intrusion Detection Service
+   Loaded: loaded (/usr/lib/systemd/system/suricata.service; enabled; vendor preset: disabled)
+   Active: active (running) since Thu 2021-07-22 05:17:33 UTC; 24h ago
+     Docs: man:suricata(1)
+ Main PID: 6879 (Suricata-Main)
+   CGroup: /system.slice/suricata.service
+           └─6879 /sbin/suricata -c /etc/suricata/suricata.yaml --pidfile /var/run/suricata.pid -i eth0 --user suricata
 
+Jul 22 05:17:33 ip-10-0-17-42.us-west-2.compute.internal systemd[1]: Starting Suricata Intrusion Detection Service...
+Jul 22 05:17:33 ip-10-0-17-42.us-west-2.compute.internal systemd[1]: Started Suricata Intrusion Detection Service.
+...output truncated...</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1089,21 +1183,21 @@ Unless you&#8217;re customizing the Partner Solution templates or are instructed
 <h2 id="_feedback">Feedback</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To submit feature ideas and report bugs, use the <strong>Issues</strong> section of the <a href="https://github.com/aws-quickstart/partner-solution-repo-name" target="_blank" rel="noopener">GitHub repository</a> for this Partner Solution. To submit code, refer to the <a href="https://fwd.aws/NwqYA?" target="_blank" rel="noopener">Partner Solution Contributor&#8217;s Guide</a>. To submit feedback on this deployment guide, use the following GitHub links:</p>
+<p>To submit feature ideas and report bugs, use the <strong>Issues</strong> section of the <a href="https://github.com/aws-ia/cfn-ps-amazon-vpc-traffic-mirroring" target="_blank" rel="noopener">GitHub repository</a> for this Partner Solution. To submit code, refer to the <a href="https://fwd.aws/NwqYA?" target="_blank" rel="noopener">Partner Solution Contributor&#8217;s Guide</a>. To submit feedback on this deployment guide, use the following GitHub links:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/aws-quickstart/partner-solution-repo-name/issues/new?labels=documentation,grammar+or+spelling&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Grammar or spelling</a></p>
+<p><a href="https://github.com/aws-ia/cfn-ps-amazon-vpc-traffic-mirroring/issues/new?labels=documentation,grammar+or+spelling&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Grammar or spelling</a></p>
 </li>
 <li>
-<p><a href="https://github.com/aws-quickstart/partner-solution-repo-name/issues/new?labels=documentation,broken+link&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Broken link</a></p>
+<p><a href="https://github.com/aws-ia/cfn-ps-amazon-vpc-traffic-mirroring/issues/new?labels=documentation,broken+link&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Broken link</a></p>
 </li>
 <li>
-<p><a href="https://github.com/aws-quickstart/partner-solution-repo-name/issues/new?labels=documentation,inaccurate+content&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Inaccurate content</a></p>
+<p><a href="https://github.com/aws-ia/cfn-ps-amazon-vpc-traffic-mirroring/issues/new?labels=documentation,inaccurate+content&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Inaccurate content</a></p>
 </li>
 <li>
-<p><a href="https://github.com/aws-quickstart/partner-solution-repo-name/issues/new?labels=documentation,display+and+design&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Display or design</a></p>
+<p><a href="https://github.com/aws-ia/cfn-ps-amazon-vpc-traffic-mirroring/issues/new?labels=documentation,display+and+design&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Display or design</a></p>
 </li>
 </ul>
 </div>
@@ -1126,7 +1220,7 @@ Unless you&#8217;re customizing the Partner Solution templates or are instructed
         <!-- We can use document attributes: -->
         <!-- Generated with Asciidoctor v2.0.20. -->
         <a href="https://aws.amazon.com/privacy/">Privacy</a> | <a href="https://aws.amazon.com/terms/">Site terms</a> |
-        &copy; {current-year}, Amazon Web Services, Inc. or its affiliates and Example Company Name, Ltd.. All rights reserved.
+        &copy; {current-year}, Amazon Web Services, Inc. or its affiliates. All rights reserved.
     </p>
 </footer>
 </body>
